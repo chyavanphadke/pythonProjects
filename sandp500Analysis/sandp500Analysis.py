@@ -179,5 +179,4 @@ for count in range(numberOfIteration):
     # just for visual
     print(count+1, ". ", stockPullTime, "-", stockName, "-", stockCurrTickPrice, "\t1ms=", tableBody[11], "\t5ms=", tableBody[12], "\t15ms=", tableBody[13], "\t1Hs=", tableBody[14])
     time.sleep(4)
-
-wb.save(filename = 'sandp500.xlsx')
+    wb.save(filename = 'sandp500.xlsx')
