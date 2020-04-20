@@ -4,41 +4,46 @@ from bs4 import BeautifulSoup
 from html.parser import HTMLParser
 from openpyxl import Workbook
 import time
+import os
 
 wb = Workbook()
 ws =  wb.active
 ws.title = "Data"
+
 ws.cell(row=1, column=1, value="Time")
 ws.cell(row=1, column=2, value="Price")
-ws.cell(row=1, column=3, value="1min MA")
-ws.cell(row=1, column=4, value="1min Ind")
-ws.cell(row=1, column=5, value="1min Sum")
 
-ws.cell(row=1, column=7, value="5min MA")
-ws.cell(row=1, column=8, value="5min Ind")
-ws.cell(row=1, column=9, value="5min Sum")
+ws.cell(row=1, column=4, value="1min MA")
+ws.cell(row=1, column=5, value="1min Ind")
+ws.cell(row=1, column=6, value="1min Sum")
 
-ws.cell(row=1, column=11, value="15min MA")
-ws.cell(row=1, column=12, value="15min Ind")
-ws.cell(row=1, column=13, value="15min Sum")
+ws.cell(row=1, column=8, value="5min MA")
+ws.cell(row=1, column=9, value="5min Ind")
+ws.cell(row=1, column=10, value="5min Sum")
 
-ws.cell(row=1, column=15, value="1hour MA")
-ws.cell(row=1, column=16, value="1hour Ind")
-ws.cell(row=1, column=17, value="1hour Sum")
+ws.cell(row=1, column=12, value="15min MA")
+ws.cell(row=1, column=13, value="15min Ind")
+ws.cell(row=1, column=14, value="15min Sum")
 
-numberOfIteration = 2000
+ws.cell(row=1, column=16, value="1hour MA")
+ws.cell(row=1, column=17, value="1hour Ind")
+ws.cell(row=1, column=18, value="1hour Sum")
+
+numberOfIteration = 4000
+sleepTime = 4
+currencieType = 8839
 
 for count in range(numberOfIteration):
     url = 'https://www.investing.com/technical/Service/GetSummaryTable'
     payload = {
-        "tab" : "userQuotes",
+        "tab" : "indices",
         "options[periods][0]": 60,
         "options[periods][1]": 300,
         "options[periods][2]": 900,
         "options[periods][3]": 3600,
         "options[email_hour]": 17,
         "options[timezone_offset]": 19800,
-        "options[currencies][]": 166
+        "options[currencies][]": currencieType
     }
     # Adding empty header as parameters are being sent in payload
     headers = {
@@ -159,24 +164,31 @@ for count in range(numberOfIteration):
     # print(json.dumps(obj, indent=2))
     
     ws.cell(row=count+2, column=1, value=stockPullTime)
-    ws.cell(row=count+2, column=2, value=stockCurrTickPrice)
-    ws.cell(row=count+2, column=3, value=tableBody[1])
-    ws.cell(row=count+2, column=4, value=tableBody[6])
-    ws.cell(row=count+2, column=5, value=tableBody[11])
+    ws.cell(row=count+2, column=2, value=float(stockCurrTickPrice.replace(',', '')))
 
-    ws.cell(row=count+2, column=7, value=tableBody[2])
-    ws.cell(row=count+2, column=8, value=tableBody[7])
-    ws.cell(row=count+2, column=9, value=tableBody[12])
+    ws.cell(row=count+2, column=4, value=tableBody[1])
+    ws.cell(row=count+2, column=5, value=tableBody[6])
+    ws.cell(row=count+2, column=6, value=tableBody[11])
 
-    ws.cell(row=count+2, column=11, value=tableBody[3])
-    ws.cell(row=count+2, column=12, value=tableBody[8])
-    ws.cell(row=count+2, column=13, value=tableBody[13])
+    ws.cell(row=count+2, column=8, value=tableBody[2])
+    ws.cell(row=count+2, column=9, value=tableBody[7])
+    ws.cell(row=count+2, column=10, value=tableBody[12])
 
-    ws.cell(row=count+2, column=15, value=tableBody[4])
-    ws.cell(row=count+2, column=16, value=tableBody[9])
-    ws.cell(row=count+2, column=17, value=tableBody[14])
+    ws.cell(row=count+2, column=12, value=tableBody[3])
+    ws.cell(row=count+2, column=13, value=tableBody[8])
+    ws.cell(row=count+2, column=14, value=tableBody[13])
+
+    ws.cell(row=count+2, column=16, value=tableBody[4])
+    ws.cell(row=count+2, column=17, value=tableBody[9])
+    ws.cell(row=count+2, column=18, value=tableBody[14])
 
     # just for visual
     print(count+1, ". ", stockPullTime, "-", stockName, "-", stockCurrTickPrice, "\t1ms=", tableBody[11], "\t5ms=", tableBody[12], "\t15ms=", tableBody[13], "\t1Hs=", tableBody[14])
-    time.sleep(4)
-    wb.save(filename = 'sandp500.xlsx')
+    
+    cwd = os.path.split(os.path.abspath(__file__))
+    excelFileName = cwd[1][:-3] + ".xlsx"
+    wb.save(filename = cwd[0] + '/' + excelFileName)
+    
+    time.sleep(sleepTime)
+
+print("Hola! Done! data has been put to excel")
