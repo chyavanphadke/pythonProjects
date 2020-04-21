@@ -45,7 +45,7 @@ ws.cell(row=1, column=32, value="200simple")
 ws.cell(row=1, column=33, value="200expo")
 ws.cell(row=1, column=34, value="Buy")
 ws.cell(row=1, column=35, value="Sell")
-ws.cell(row=1, column=36, value="Summary")
+ws.cell(row=1, column=36, value="MA Summary")
 
 ws.cell(row=1, column=38, value='Clas S1')
 ws.cell(row=1, column=39, value='Fib S1')
