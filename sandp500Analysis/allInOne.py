@@ -106,7 +106,7 @@ ws.cell(row=1, column=70, value='Cam R1')
 ws.cell(row=1, column=71, value='Woo R1')
 ws.cell(row=1, column=72, value='DeM R1')
 
-numberOfIteration = 20000
+numberOfIteration = 10000
 sleepTime = 3
 currencieType = 8839
 
@@ -327,4 +327,4 @@ for count in range(maxColumn, numberOfIteration):
     
     time.sleep(sleepTime)
 
-print("Hola! Done B! data has been put to excel")
+print("Hola! Done! data has been put to excel")
