@@ -127,7 +127,7 @@ headersAll = {
     "Accept-Encoding":"gzip, deflate, br",
     "Accept-Language":"en-IN,en;q=0.9,kn-IN;q=0.8,kn;q=0.7,en-US;q=0.6",
     "Connection":"keep-alive",
-    "Content-Length":'202',
+    "Content-Length":202,
     "Content-Type":"application/x-www-form-urlencoded",
     "Host":"www.investing.com",
     "Origin":"https://www.investing.com",

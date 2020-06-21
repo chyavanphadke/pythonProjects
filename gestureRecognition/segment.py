@@ -1,6 +1,3 @@
-#-------------------------------------------
-# SEGMENT HAND REGION FROM A VIDEO SEQUENCE
-#-------------------------------------------
 
 # organize imports
 import cv2
